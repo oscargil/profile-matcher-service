@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  profile-matcher-api:
+    build: .
+    container_name: profile-matcher
+    ports:
+      - "8000:8000"
+    restart: always
