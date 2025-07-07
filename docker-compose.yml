@@ -1,9 +1,39 @@
-version: '3.8'
-
 services:
-  profile-matcher-api:
+  web:
     build: .
-    container_name: profile-matcher
+    container_name: django-matcher
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: matcher-db
     restart: always
+    environment:
+      POSTGRES_DB: gameloft_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  test:
+    build: .
+    container_name: matcher-test
+    command: pytest
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

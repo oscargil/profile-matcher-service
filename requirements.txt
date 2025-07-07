@@ -1,4 +1,6 @@
-fastapi
-uvicorn[standard]
-pydantic
+Django>=4.2
+psycopg2-binary>=2.9
+djangorestframework
+drf-yasg
 pytest
+pytest-django
